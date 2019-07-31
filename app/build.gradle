@@ -16,7 +16,6 @@ android {
         versionCode rootProject.ext.versionCode
         versionName rootProject.ext.versionName
         multiDexEnabled true
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         ndk {
             abiFilters "armeabi", "armeabi-v7a", "x86", "mips"
         }
@@ -67,5 +66,5 @@ dependencies {
     implementation "com.zzh:viewtools:$rootProject.ext.viewToolsVersion"
     implementation "com.zzh:rjtools:$rootProject.ext.rjtoolsVersion"
     implementation 'com.android.support:multidex:1.0.3'
-    implementation project(':officelib')
+    implementation project(path: ':office')
 }

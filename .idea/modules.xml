@@ -4,7 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/OfficeUtil.iml" filepath="$PROJECT_DIR$/OfficeUtil.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/officelib/officelib.iml" filepath="$PROJECT_DIR$/officelib/officelib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/office/office.iml" filepath="$PROJECT_DIR$/office/office.iml" />
     </modules>
   </component>
 </project>

@@ -25,9 +25,9 @@ import kotlinx.android.synthetic.main.public_titile.*
  **/
 
 class ExpertBookListActivity : AppCompatActivity() {
+
     var ur1 = "https://www.kotlincn.net/docs/kotlin-docs.pdf"
     var ur2 = "http://zyweike.cdn.bcebos.com/zyweike/ep1/2018/04/02/周末加班统计.xlsx"
-    var ur3 = "http://zyweike.cdn.bcebos.com/zyweike/ep1/2018/04/02/周末加班统计.xlsx"
 
     private var listBooksAdapter: ListBooksAdapter? = null
 
@@ -45,11 +45,11 @@ class ExpertBookListActivity : AppCompatActivity() {
 
         var data = arrayListOf(
                 BooksBean("Kotlin基础文档", ur1),
-                BooksBean("周末加班统计", ur2),
-                BooksBean("算法规则", ur3))
+                BooksBean("周末加班统计", ur2))
 
 
         listBooksAdapter!!.setNewData(data)
+
     }
 
 
@@ -81,7 +81,6 @@ class ExpertBookListActivity : AppCompatActivity() {
                             AppConfig.get().initFileDir()
                         }
                     }
-
                     override fun notAskPermission(permission: List<String>, goSetting: Boolean) {
                         if (goSetting) {
                             PermissionUtils.getInstance().toAppSetting(this@ExpertBookListActivity)

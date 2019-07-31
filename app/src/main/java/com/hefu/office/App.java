@@ -3,6 +3,8 @@ package com.hefu.office;
 import android.content.Context;
 import android.support.multidex.MultiDexApplication;
 
+import com.zzh.office.OfficeConfig;
+
 import static com.dz.utlis.JavaUtils.isdebug;
 
 /**
@@ -51,9 +53,7 @@ public class App extends MultiDexApplication {
         this.application = this;
         isdebug = true;
 
-        com.zzh.officeLib.OfficeConfig.initWebX5(this);
-
-
+        OfficeConfig.initWebX5(this);
 
     }
 

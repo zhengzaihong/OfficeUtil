@@ -7,7 +7,7 @@
 
     <include layout="@layout/public_titile"></include>
 
-    <com.zzh.officeLib.view.OfficeFileView
+    <com.zzh.office.view.OfficeFileView
         android:id="@+id/fileView"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
