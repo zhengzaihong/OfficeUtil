@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#132051</color>
+    <color name="colorPrimaryDark">#132051</color>
+    <color name="colorAccent">#132051</color>
+
+    <color name="theme_bg">#0B1435</color>
+    <color name="login_button_blue">#5A8BF4</color>
+
+    <color name="theme_line">#3E56AB</color>
+    <color name="theme_item">#132051</color>
+
+    <color name="theme_item_tra">#dd132051</color>
+
+
+    <color name="black_1">#333333</color>
+    <color name="black_2">#666666</color>
+    <color name="black_3">#999999</color>
+    <color name="black_4">#bbbbbb</color>
+
+    <color name="index_text_press">#FF4081</color>
+    <color name="index_text_unpress">#FEAAD0</color>
+
+    <color name="pointlineColor">#9014EE</color>
+
+    <color name="line">#F0F0F0</color>
+
+
+
+    <color name="bocop_dialog_bg">#77000000</color>
+    <color name="color_transparent">#00000000</color>
+    <color name="white">#ffffff</color>
+    <color name="color_e84515">#e84515</color>
+    <color name="color_d8d8d8">#d8d8d8</color>
+    <color name="color_323232">#323232</color>
+
+    <color name="huise">#c9cbcd</color>
+
+    <color name="province_line_border">#D0D0D0</color>
+
+
+    <color name="color1">#FFFFFF</color>
+    <color name="color2">#666666</color>
+    <color name="color3">#D0D0D0</color>
+    <color name="color13">#F9974E</color>
+    <color name="color14">#59B29C</color>
+    <color name="color25">#ED5564</color>
+    <color name="color26">#D7D8DC</color>
+
+
+    <color name="button_press">#4C6DE1</color>
+
+    <color name="button_unpress">#132051</color>
+
+
+</resources>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/theme_bg"
+    android:orientation="vertical">
+
+    <include layout="@layout/public_titile"></include>
+
+
+    <ListView
+        android:id="@+id/listViewExperBook"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:divider="#151E40"
+        android:dividerHeight="@dimen/len_1"
+        tools:listitem="@layout/item_layout_expert_book">
+    </ListView>
+
+</LinearLayout>
