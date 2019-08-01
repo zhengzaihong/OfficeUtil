@@ -1,5 +1,6 @@
 package com.zzh.office.view;
 
+import android.os.Handler;
 import android.text.TextUtils;
 
 import com.zzh.office.utils.HttpUrlConnectionAsyncTask;
@@ -18,6 +19,7 @@ import static com.zzh.office.Log.outRedPrint;
  **/
 
 public class OfficePre {
+
     //TBS view
     private OfficeFileView mOfficeFileView;
 
@@ -30,7 +32,12 @@ public class OfficePre {
 
     private static OfficePre officePre;
 
+    //下载任务
     private HttpUrlConnectionAsyncTask asyncTask;
+
+    //是否开启下载询问
+    private boolean isEnableAskUpdate;
+
 
     private OfficePre() {
     }
@@ -64,7 +71,7 @@ public class OfficePre {
                         outRedPrint("onGetFilePath缓存文件：" + file.getAbsolutePath());
                         //TODO 这里还可以加入询问用户是否重新下载
 
-                        if (null != checkLocalFileListener) {
+                        if (null != checkLocalFileListener && isEnableAskUpdate) {
                             //这里添加了监听 则认为是想提示用户 当有本地缓存则需要重新下载 否则直接加载缓存文档
                             //提示了 则需要外部手动触发overrideDownload() 方法
                             checkLocalFileListener.localHasFile();
@@ -82,8 +89,6 @@ public class OfficePre {
                 }
             }
         });
-
-
         return this;
 
     }
@@ -101,7 +106,6 @@ public class OfficePre {
             asyncTask.cancel(true);
         }
     }
-
 
     private void downLoadFromNet() {
 
@@ -123,9 +127,15 @@ public class OfficePre {
                 if (!file1.exists()) {
                     file1.mkdirs();
                 }
-                if (null != downloadListener) {
-                    downloadListener.onStart();
-                }
+
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (null != downloadListener) {
+                            downloadListener.onStart();
+                        }
+                    }
+                });
             }
 
             @Override
@@ -135,34 +145,56 @@ public class OfficePre {
                     file.delete();
                 }
 
-                if (null != downloadListener) {
-                    downloadListener.onException();
-                }
+
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (null != downloadListener) {
+                            downloadListener.onException();
+                        }
+                    }
+                });
             }
 
             @Override
-            public void onProgress(Integer progress) {
-                if (null != downloadListener) {
-                    downloadListener.progress(progress);
-                }
+            public void onProgress(final Integer progress) {
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (null != downloadListener) {
+                            downloadListener.progress(progress);
+                        }
+                    }
+                });
             }
 
             @Override
             public void canclelled(String msg) {
 
-                if (null != downloadListener) {
-                    downloadListener.onCancel();
-                }
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (null != downloadListener) {
+                            downloadListener.onCancel();
+                        }
+                    }
+                });
             }
 
             @Override
-            public void onSuccess(String url) {
+            public void onSuccess(final String url) {
 
                 mOfficeFileView.displayFile(new File(url));
 
-                if (null != downloadListener) {
-                    downloadListener.onFinish(url);
-                }
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        if (null != downloadListener) {
+                            downloadListener.onFinish(url);
+                        }
+                    }
+                });
             }
         });
     }
@@ -171,18 +203,14 @@ public class OfficePre {
     /**
      * @param url      本地或者网络文档的url 需要带有后缀的文档 如http://xxxxxxxx/xx/kotlin.pdf
      * @param savePath 存储到手机的地址 如：/storage/emulated/0/pdf/
-     *                 如：kotlin.pdf  最后完整路径：/storage/emulated/0/pdf/kotlin.pdf
+     *                 如：kotlin.pdf  最后完整路径：savePath/kotlin.pdf
+     * @return 对象
      */
 
     public OfficePre showPre(String url, String savePath) {
 
-        if (null == mOfficeFileView) {
-            new RuntimeException("请先初始化,调用init()");
-        }
-        if (TextUtils.isEmpty(url)) {
-            new RuntimeException("请检查参数，url地址不正确");
-        }
 
+        checkInit(url);
         this.fileUrl = url;
         this.savePath = savePath;
         this.fileName = url.substring(url.lastIndexOf("/") + 1);
@@ -192,14 +220,61 @@ public class OfficePre {
 
 
     /**
-     * 加载本地文件
+     * @param url      本地或者网络文档的url 没有后缀的文档 如http://documnet/file/1
+     * @param fileName kotlin.pdf
+     * @param savePath 最后完整路径：savePath/kotlin.pdf
+     * @return 当前对象
      */
-    public void preLocalFile() {
-        mOfficeFileView.displayFile(getCacheFile());
+    public OfficePre showPre(String url, String fileName, String savePath) {
+
+        checkInit(url);
+        this.fileUrl = url;
+        this.savePath = savePath;
+        this.fileName = fileName;
+        mOfficeFileView.show();
+
+        return this;
+    }
+
+    private void checkInit(String url) {
+
+        if (null == mOfficeFileView) {
+            new RuntimeException("请先初始化,调用init()");
+        }
+        if (TextUtils.isEmpty(url)) {
+            new RuntimeException("请检查参数，url地址不正确");
+        }
     }
 
     /**
-     * 加载本地文件
+     * 直接读取旧文档
+     */
+    public void readOldFile() {
+
+        File file = getCacheFile();
+        if (null != file) {
+            if (null == mOfficeFileView) {
+                new RuntimeException("请先初始化init方法");
+                return;
+            }
+            mOfficeFileView.displayFile(file);
+        }
+    }
+
+
+    /**
+     *
+     * @param isEnableAskUpdate true 会提示用户是否需要重新下载
+     * @return 当前对象
+     */
+    public OfficePre setEnableAskUpdate(boolean isEnableAskUpdate) {
+        this.isEnableAskUpdate = isEnableAskUpdate;
+        return this;
+    }
+
+
+    /**
+     * @param file 加载本地文件
      */
     public void preLocalFile(File file) {
         mOfficeFileView.displayFile(file);
@@ -207,7 +282,7 @@ public class OfficePre {
 
     /***
      * 获取缓存目录
-     * @return
+     * @return 返回缓存文件
      */
     private File getCacheDir() {
         return new File(savePath);
@@ -215,8 +290,7 @@ public class OfficePre {
     }
 
     /***
-     * 绝对路径获取缓存文件
-     * @return
+     * @return 绝对路径获取缓存文件
      */
     private File getCacheFile() {
         File cacheFile = new File(savePath + "/"
@@ -284,5 +358,7 @@ public class OfficePre {
 
     }
 
+
+    private Handler handler = new Handler();
 
 }

@@ -62,41 +62,42 @@ class ExpertInformationActivity : AppCompatActivity() {
                     }
 
                     override fun oftenCancle() {
-                        mOfficePre.preLocalFile()
+                        mOfficePre.readOldFile()
                     }
                 })
 
         mOfficePre?.let {
 
-                    it.init(fileView)
+            it.init(fileView)
+                    .setEnableAskUpdate(true)
                     .setOnCheckLocalFileListener {
                         oftenDialog?.showDialog()
                     }
                     .showPre(booksBean?.url, AppConfig.get().PATH_APP_DOWNLOAD)
                     .setOnDownloadListener(object : OfficePre.OnDownloadListener {
-                                override fun progress(progress: Int?) {
-                                    outRedPrint("下载进度：$progress")
-                                }
+                        override fun progress(progress: Int?) {
+                            loadingDialog?.setLoadingTips("下载中,请稍等: $progress")
+                        }
 
-                                override fun onStart() {
-                                    outPrint("开始网络下载： ")
-                                    runOnUiThread { loadingDialog?.showDialog() }
-                                }
+                        override fun onStart() {
+                            outPrint("开始网络下载： ")
+                            loadingDialog?.showDialog()
+                        }
 
-                                override fun onFinish(url: String?) {
-                                    outRedPrint("下载完毕：$url")
-                                    runOnUiThread { loadingDialog?.dismiss() }
-                                }
+                        override fun onFinish(url: String?) {
+                            outRedPrint("下载完毕：$url")
+                            loadingDialog?.dismiss()
+                        }
 
-                                override fun onException() {
-                                    outRedPrint("下载失败")
-                                    runOnUiThread { loadingDialog?.dismiss() }
-                                }
+                        override fun onException() {
+                            outRedPrint("下载失败")
+                            runOnUiThread { loadingDialog?.dismiss() }
+                        }
 
-                                override fun onCancel() {
-                                    runOnUiThread { loadingDialog?.dismiss() }
-                                }
-                            })
+                        override fun onCancel() {
+                            runOnUiThread { loadingDialog?.dismiss() }
+                        }
+                    })
 
         }
 
