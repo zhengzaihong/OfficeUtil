@@ -90,9 +90,7 @@ public class OfficePre {
             }
         });
         return this;
-
     }
-
 
     /**
      * 停止加载，退出界面时调用
@@ -145,7 +143,6 @@ public class OfficePre {
                     file.delete();
                 }
 
-
                 handler.post(new Runnable() {
                     @Override
                     public void run() {
@@ -189,7 +186,6 @@ public class OfficePre {
                 handler.post(new Runnable() {
                     @Override
                     public void run() {
-
                         if (null != downloadListener) {
                             downloadListener.onFinish(url);
                         }
@@ -208,7 +204,6 @@ public class OfficePre {
      */
 
     public OfficePre showPre(String url, String savePath) {
-
 
         checkInit(url);
         this.fileUrl = url;
@@ -277,6 +272,11 @@ public class OfficePre {
      * @param file 加载本地文件
      */
     public void preLocalFile(File file) {
+
+        if (null == mOfficeFileView) {
+            new RuntimeException("请先初始化init方法");
+            return;
+        }
         mOfficeFileView.displayFile(file);
     }
 
@@ -284,7 +284,7 @@ public class OfficePre {
      * 获取缓存目录
      * @return 返回缓存文件
      */
-    private File getCacheDir() {
+    public File getCacheDir() {
         return new File(savePath);
 
     }
@@ -292,7 +292,7 @@ public class OfficePre {
     /***
      * @return 绝对路径获取缓存文件
      */
-    private File getCacheFile() {
+    public File getCacheFile() {
         File cacheFile = new File(savePath + "/"
                 + fileName
         );
@@ -355,7 +355,6 @@ public class OfficePre {
             loaclFile.delete();
         }
         downLoadFromNet();
-
     }
 
 

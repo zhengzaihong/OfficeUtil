@@ -50,7 +50,7 @@ publish {
     userOrg = 'zhengzaihong'
     groupId = 'com.zzh'
     uploadName = "office"
-    publishVersion = '0.1.1'
+    publishVersion = '0.1.2'
     desc = 'Make android Support browsing various files online like IOS, such as doc，pdf,xlsx,txt,pptx, etc.'
     website = 'https://github.com/zhengzaihong/OfficeUtil.git'
 }
