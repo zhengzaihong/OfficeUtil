@@ -9,16 +9,18 @@ import static com.zzh.office.Log.outRedPrint;
 
 
 /**
- * creat_user: zhengzaihong
+ * create_user: zhengzaihong
  * email:1096877329@qq.com
- * creat_date: 2019/4/18 0018
- * creat_time: 13:38
+ * create_date: 2019/4/18 0018
+ * create_time: 13:38
  * describe: 初始化tbs
  **/
 
-public class OfficeConfig {
+public class OfficeHelper {
 
-    public static void initWebX5(Context context) {
+    private static boolean debug = true;
+
+    public static void init(Context context) {
 
         QbSdk.setDownloadWithoutWifi(true);
         //x5内核初始化接口
@@ -28,6 +30,7 @@ public class OfficeConfig {
                 //x5內核初始化完成的回调，为true表示x5内核加载成功，否则表示x5内核加载失败，会自动切换到系统内核。
                 outRedPrint(" QbSdk onViewInitFinished is " + arg0);
             }
+
             @Override
             public void onCoreInitFinished() {
                 outRedPrint(" QbSdk onCoreInitFinished is ");
@@ -46,6 +49,7 @@ public class OfficeConfig {
                 //内核安装完成回调，
                 outRedPrint(" onInstallFinish ");
             }
+
             @Override
             public void onDownloadProgress(int i) {
                 //下载进度监听
@@ -54,5 +58,13 @@ public class OfficeConfig {
         });
 
     }
+
+    public static void enableDebug(boolean enable) {
+        debug = enable;
+    }
+    public static boolean isDebug() {
+        return debug;
+    }
+
 
 }

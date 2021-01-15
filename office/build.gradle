@@ -9,10 +9,10 @@ android {
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
-
+        multiDexEnabled true
         //X5兼容64位手机
         ndk {
-            abiFilters "armeabi", "armeabi-v7a", "arm64-v8a","x86", "x86_64","mips"
+            abiFilters "armeabi", "armeabi-v7a"
         }
     }
 
@@ -30,10 +30,10 @@ android {
         }
     }
 
-    //kotlin 项目需要加入
-    sourceSets {
-        main.java.srcDirs += 'src/main/kotlin'
-    }
+//    //kotlin 项目需要加入
+//    sourceSets {
+//        main.java.srcDirs += 'src/main/kotlin'
+//    }
     lintOptions {
         abortOnError false
     }
@@ -42,7 +42,7 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation files('libs/tbs_2019V4.3.0.1020.jar')
+    implementation files('libs/tbslib.jar')
 }
 //添加
 publish {
@@ -50,12 +50,13 @@ publish {
     userOrg = 'zhengzaihong'
     groupId = 'com.zzh'
     uploadName = "office"
-    publishVersion = '0.1.2'
+    publishVersion = '0.1.4'
     desc = 'Make android Support browsing various files online like IOS, such as doc，pdf,xlsx,txt,pptx, etc.'
     website = 'https://github.com/zhengzaihong/OfficeUtil.git'
 }
 
-tasks.withType(Javadoc) {
+tasks.withType(Javadoc).all {
+    enabled = false
     options {
         encoding "UTF-8"
         charSet 'UTF-8'

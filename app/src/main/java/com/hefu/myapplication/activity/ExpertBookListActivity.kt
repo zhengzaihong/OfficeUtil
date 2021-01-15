@@ -1,17 +1,17 @@
-package com.hefu.office.activity
+package com.hefu.myapplication.activity
 
 import android.Manifest
 import android.content.Context
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import com.dz.utlis.ClassTools
 import com.dz.utlis.PermissionUtils
 import com.dz.utlis.TimeUtil
+import com.hefu.myapplication.R
 import com.hefu.office.AppConfig
-import com.hefu.office.R
-import com.hefu.office.bean.BooksBean
+import com.hefu.myapplication.bean.BooksBean
 import dz.solc.viewtool.adapter.CommonAdapter
 import kotlinx.android.synthetic.main.activity_layout_expert_book.*
 import kotlinx.android.synthetic.main.public_titile.*
@@ -26,6 +26,7 @@ import kotlinx.android.synthetic.main.public_titile.*
 
 class ExpertBookListActivity : AppCompatActivity() {
 
+//    var ur1 = "http://220.196.49.100:82/spectrums/export/8"
     var ur1 = "https://www.kotlincn.net/docs/kotlin-docs.pdf"
     var ur2 = "http://zyweike.cdn.bcebos.com/zyweike/ep1/2018/04/02/周末加班统计.xlsx"
 
@@ -37,6 +38,7 @@ class ExpertBookListActivity : AppCompatActivity() {
         setContentView(R.layout.activity_layout_expert_book)
 
         requestPermission()
+
         tvTitle.visibility = View.VISIBLE
         tvTitle.text = "专家资料"
 
@@ -51,6 +53,18 @@ class ExpertBookListActivity : AppCompatActivity() {
         listBooksAdapter!!.setNewData(data)
 
     }
+
+
+    override fun onRequestPermissionsResult(
+            requestCode: Int,
+            permissions: Array<out String>,
+            grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        PermissionUtils.getInstance()
+                .onRequestPermissionsResult(requestCode, permissions, grantResults, true)
+    }
+
 
 
     inner class ListBooksAdapter(mContext: Context, xmlId: Int) : CommonAdapter<BooksBean>(mContext, xmlId) {
@@ -83,7 +97,7 @@ class ExpertBookListActivity : AppCompatActivity() {
                     }
                     override fun notAskPermission(permission: List<String>, goSetting: Boolean) {
                         if (goSetting) {
-                            PermissionUtils.getInstance().toAppSetting(this@ExpertBookListActivity)
+                            PermissionUtils.getInstance().toSystemSetting(this@ExpertBookListActivity)
                         }
                     }
                 })

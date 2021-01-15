@@ -16,10 +16,10 @@ import static com.zzh.office.Log.outRedPrint;
 
 
 /**
- * creat_user: zhengzaihong
+ * create_user: zhengzaihong
  * email:1096877329@qq.com
- * creat_date: 2019/4/18 0018
- * creat_time: 13:39
+ * create_date: 2019/4/18 0018
+ * create_time: 13:39
  * describe: 预览文档的view.TbsReaderView 支持 doc，pdf,xlsx,txt,pptx
  **/
 
@@ -44,14 +44,6 @@ public class OfficeFileView extends FrameLayout implements TbsReaderView.ReaderC
     }
 
 
-    private OnGetFilePathListener mOnGetFilePathListener;
-
-
-    public void setOnGetFilePathListener(OnGetFilePathListener mOnGetFilePathListener) {
-        this.mOnGetFilePathListener = mOnGetFilePathListener;
-    }
-
-
     private TbsReaderView getTbsReaderView(Context context) {
         return new TbsReaderView(context, this);
     }
@@ -61,7 +53,7 @@ public class OfficeFileView extends FrameLayout implements TbsReaderView.ReaderC
      *
      * @param mFile
      */
-    protected void displayFile(File mFile) {
+    protected void displayFile(OfficePre.OnReadStatusListener listener, File mFile) {
 
         if (mFile != null && !TextUtils.isEmpty(mFile.toString())) {
 
@@ -70,7 +62,7 @@ public class OfficeFileView extends FrameLayout implements TbsReaderView.ReaderC
 
             if (!bsReaderTempFile.exists()) {
                 outRedPrint("准备创建：" + bsReaderTemp);
-                boolean mkdir = bsReaderTempFile.mkdir();
+                boolean mkdir = bsReaderTempFile.mkdirs();
                 if (!mkdir) {
                     outRedPrint("创建失败：" + bsReaderTemp);
                 }
@@ -89,11 +81,20 @@ public class OfficeFileView extends FrameLayout implements TbsReaderView.ReaderC
             if (bool) {
                 this.mTbsReaderView.openFile(localBundle);
             }
+            if(null!=listener){
+                listener.readStatus(bool);
+            }
+
         } else {
+            if(null!=listener){
+                listener.readStatus(false);
+            }
             outRedPrint("文件路径无效！");
         }
 
     }
+
+
 
     /***
      * 获取文件类型
@@ -115,26 +116,16 @@ public class OfficeFileView extends FrameLayout implements TbsReaderView.ReaderC
             return str;
         }
 
-
         str = paramString.substring(i + 1);
         outRedPrint("paramString.substring(i + 1)------>" + str);
         return str;
     }
 
-    protected void show() {
-        if (mOnGetFilePathListener != null) {
-            mOnGetFilePathListener.onGetFilePath(this);
-        }
-    }
-
-    protected interface OnGetFilePathListener {
-        void onGetFilePath(OfficeFileView mSuperFileView);
-    }
 
 
     @Override
     public void onCallBackAction(Integer integer, Object o, Object o1) {
-        outRedPrint("****************************************************" + integer);
+        outRedPrint("**onCallBackAction code:" + integer);
     }
 
     protected void onStopDisplay() {

@@ -1,7 +1,7 @@
 package com.hefu.office;
 
-import com.dz.utlis.FileUtils;
 import com.dz.utlis.IOUtils;
+import com.dz.utlis.SdCardUtil;
 
 import java.io.File;
 
@@ -24,7 +24,7 @@ public class AppConfig {
 
     private AppConfig() {
 
-        this.PATH_APP_ROOT = FileUtils.getAppRootPath(App.getinstance()).getAbsolutePath() + File.separator + "ssssssss";
+        this.PATH_APP_ROOT = SdCardUtil.getAppRootPath(App.getinstance()).getAbsolutePath() + File.separator + "ssssssss";
         this.PATH_APP_DOWNLOAD = PATH_APP_ROOT + File.separator + "Download";
     }
 
