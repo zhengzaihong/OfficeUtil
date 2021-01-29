@@ -76,9 +76,10 @@ public class OfficePre {
         //网络地址要先下载
         boolean isNetFile = false;
         for (String prefix : prefixs) {
-            builder.getFileUrl().startsWith(prefix);
-            isNetFile = true;
-            break;
+          if( builder.getFileUrl().startsWith(prefix)){
+              isNetFile = true;
+              break;
+          }
         }
         if (isNetFile) {
             File file = getCacheFile();
@@ -97,7 +98,6 @@ public class OfficePre {
             }
         } else {
             displayFile(new File(builder.getFileUrl()));
-
         }
     }
 

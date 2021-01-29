@@ -26,8 +26,8 @@ import kotlinx.android.synthetic.main.public_titile.*
 
 class ExpertBookListActivity : AppCompatActivity() {
 
-//    var ur1 = "http://220.196.49.100:82/spectrums/export/8"
-    var ur1 = "https://www.kotlincn.net/docs/kotlin-docs.pdf"
+    var ur1 = "http://220.196.49.100:82/spectrums/export/8"
+//    var ur1 = "https://www.kotlincn.net/docs/kotlin-docs.pdf"
     var ur2 = "http://zyweike.cdn.bcebos.com/zyweike/ep1/2018/04/02/周末加班统计.xlsx"
 
     private var listBooksAdapter: ListBooksAdapter? = null

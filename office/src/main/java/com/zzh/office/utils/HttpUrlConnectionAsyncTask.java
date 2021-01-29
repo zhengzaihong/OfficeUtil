@@ -66,8 +66,9 @@ public class HttpUrlConnectionAsyncTask extends AsyncTask<Integer, Integer, Stri
                 for (String value : values) {
                     String[] vas = value.split(";");
                     for (String va : vas) {
-                        if ((!TextUtils.isEmpty(va)) && va.startsWith(pBuilder.getJoinHeadFileKey() + pBuilder.getJoinSymbol())) {
-                            pBuilder.setFileName(va);
+                        String pattenKey = pBuilder.getJoinHeadFileKey() + pBuilder.getJoinSymbol();
+                        if ((!TextUtils.isEmpty(va)) && va.startsWith(pattenKey)) {
+                            pBuilder.setFileName(va.substring(pattenKey.length()));
                         }
                     }
                 }
@@ -111,6 +112,7 @@ public class HttpUrlConnectionAsyncTask extends AsyncTask<Integer, Integer, Stri
             if (connection != null) {
                 connection.disconnect();
             }
+            callBack(LoadStatus.ON_FILNISH, pBuilder.getSavePath());
         }
         return pBuilder.getSavePath();
     }

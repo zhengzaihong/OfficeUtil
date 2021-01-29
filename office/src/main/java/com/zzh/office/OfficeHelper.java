@@ -18,7 +18,7 @@ import static com.zzh.office.Log.outRedPrint;
 
 public class OfficeHelper {
 
-    private static boolean debug = true;
+    private static boolean debug = false;
 
     public static void init(Context context) {
 

@@ -56,10 +56,6 @@ class ExpertInformationActivity : AppCompatActivity() {
         booksBean = intent.extras?.getSerializable("bean") as BooksBean
 
 
-
-
-
-
         loadingDialog = LoadingDialog(this)
             .setShowMaxTime(Int.MAX_VALUE)
             .setLoadingTips("下载中,请稍等...")
@@ -83,11 +79,11 @@ class ExpertInformationActivity : AppCompatActivity() {
             var builder = ParameterBuilder().apply {
                 fileUrl = booksBean?.url
                 savePath = AppConfig.get().PATH_APP_DOWNLOAD
-//
-//                isAutoJoinFileName = true
-//                joinHeadParamKey = "Content-Disposition"
-//                joinHeadFileKey = "fileName"
-//                joinSymbol = "="
+
+                isAutoJoinFileName = true
+                joinHeadParamKey = "Content-Disposition"
+                joinHeadFileKey = "fileName"
+                joinSymbol = "="
 
 
             }.build()
@@ -112,12 +108,14 @@ class ExpertInformationActivity : AppCompatActivity() {
 
                     override fun onHandConnection(httpURLConnection: HttpURLConnection) {
                         //如果请求需要设置请求头等信息
-//                        httpURLConnection.setRequestProperty("hefu","008a3b8adf024ca4a188da40f994e43f")
+                        httpURLConnection.setRequestProperty(
+                            "hefu",
+                            "35c98e9f350f4840af4453acbf8766b7"
+                        )
                     }
 
                 })
             it.show(builder)
-
         }
 
     }
